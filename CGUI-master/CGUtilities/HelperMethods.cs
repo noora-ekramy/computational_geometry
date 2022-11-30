@@ -8,7 +8,7 @@ namespace CGUtilities
 {
     public class HelperMethods
     {
-        public static Enums.PointInPolygon PointInTriangle(Point p, Point a, Point b, Point c)
+        public static Enums.PointInPolygon PointInTriangle(Point p, Point a, Point b, Point c)  
         {
             if (a.Equals(b) && b.Equals(c))
             {
