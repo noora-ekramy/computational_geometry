@@ -21,6 +21,7 @@ namespace CGAlgorithms.Algorithms.ConvexHull
             List<Point> hull = new List<Point>();
             int left_most = 0;
             int cnt = points.Count;
+
             for (int i = 1; i < cnt; i++)
             {
                 if (points[i].X < points[left_most].X)
@@ -30,24 +31,28 @@ namespace CGAlgorithms.Algorithms.ConvexHull
             }
 
             int p = left_most;
-            int q;
+            int q = 0;
 
             do
             {
                 hull.Add(points[p]);
 
-                q = (p + 1) % cnt;
-
                 for (int i = 0; i < cnt; i++)
                 {
+
                     Point p12 = calculate_vector(points[p], points[i]);
                     Point p23 = calculate_vector(points[i], points[q]);
-                    if (HelperMethods.CheckTurn(p12, p23) == Enums.TurnType.Left)
+                    if (HelperMethods.CheckTurn(p12, p23) == Enums.TurnType.Left ||
+                        (HelperMethods.CheckTurn(p12, p23) == Enums.TurnType.Colinear && !HelperMethods.PointOnSegment(points[i], points[p], points[q])))
                     {
                         q = i;
                     }
+
+
                 }
+
                 p = q;
+
             } while (p != left_most);
 
             outPoints = hull;
