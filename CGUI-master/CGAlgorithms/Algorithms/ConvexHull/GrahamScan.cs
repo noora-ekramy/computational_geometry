@@ -27,60 +27,42 @@ namespace CGAlgorithms.Algorithms.ConvexHull
                 return;
             }
 
-            var orderedPoints = points.OrderBy(x => x.Y).ToList();
-
-            Point convex_points_1;
-            Point convex_points_2;
-
-            convex_points_1 = orderedPoints[0];
-            
+            var orderedPoints = points.OrderBy(p => p.X).ThenBy(p => p.Y).ToList();
+            outPoints.Add(orderedPoints[0]);
             orderedPoints.RemoveAt(0);
 
             List<KeyValuePair<Point,double>> Angles = new List<KeyValuePair<Point,double>>();
             
             for (int i=0; i < orderedPoints.Count; i++)
             {
-                Angles.Add(new KeyValuePair<Point, double>(orderedPoints[i],angle(convex_points_1, orderedPoints[i])));
+                Angles.Add(new KeyValuePair<Point, double>(orderedPoints[i], angle(outPoints[0], orderedPoints[i])));
             }
 
-            var orderedangles = Angles.OrderBy(x => x.Value).ToList();
-            convex_points_2 = orderedangles[0].Key;
-            orderedangles.RemoveAt(0);
+            var orderedAngles = Angles.OrderBy(x => x.Value).ToList();
 
-            outPoints.Add(convex_points_1);
-            outPoints.Add(convex_points_2);
+            outPoints.Add(orderedAngles[0].Key);
+            orderedAngles.RemoveAt(0);
 
-            while (orderedangles.Count > 0)
+            for (int i = 0; i < orderedAngles.Count; i++)
             {
-                Line l = new Line(convex_points_1, convex_points_2);
-                Point point = orderedangles[0].Key;
-                outPoints.Add(point);
-                orderedangles.RemoveAt(0);
-
-                if (HelperMethods.CheckTurn(l, point) == Enums.TurnType.Left)
+                Line l = new Line(outPoints[outPoints.Count - 2], outPoints[outPoints.Count - 1]);
+                while (HelperMethods.CheckTurn(l, orderedAngles[i].Key) == Enums.TurnType.Right|| HelperMethods.CheckTurn(l, orderedAngles[i].Key) == Enums.TurnType.Colinear)
                 {
-                    convex_points_1 = convex_points_2;
-                    convex_points_2 = point;
-                }
-                else
-                {
-                    while (true)
+                    outPoints.RemoveAt(outPoints.Count - 1);
+                    if (outPoints.Count <2)
                     {
-                        convex_points_1 = outPoints[outPoints.Count - 3];
-                        convex_points_2 = outPoints[outPoints.Count - 1];
-                        outPoints.RemoveAt(outPoints.Count - 2);
-
-                        Line ll = new Line(outPoints[outPoints.Count - 3], outPoints[outPoints.Count - 2]);
-                        Point po = outPoints[outPoints.Count - 1];
-                        if (HelperMethods.CheckTurn(ll, po) == Enums.TurnType.Left)
-                        {
-                            break;
-                        }
+                        break;
+                    }
+                    else 
+                    {
+                        l = new Line(outPoints[outPoints.Count - 2], outPoints[outPoints.Count - 1]);
                     }
 
                 }
-            }
+                outPoints.Add(orderedAngles[i].Key);
 
+            }
+          Console.WriteLine(outPoints .Count);
         }
 
         public override string ToString()
