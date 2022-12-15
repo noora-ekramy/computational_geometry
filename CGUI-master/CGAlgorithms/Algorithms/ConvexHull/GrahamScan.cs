@@ -9,7 +9,7 @@ namespace CGAlgorithms.Algorithms.ConvexHull
 {
     public class GrahamScan : Algorithm
     {
-        double angle(Point p1 , Point p2)
+        double angle(Point p1, Point p2)
         {
             double xDiff = p2.X - p1.X;
             double yDiff = p2.Y - p1.Y;
@@ -18,12 +18,9 @@ namespace CGAlgorithms.Algorithms.ConvexHull
         public override void Run(List<Point> points, List<Line> lines, List<Polygon> polygons, ref List<Point> outPoints, ref List<Line> outLines, ref List<Polygon> outPolygons)
         {
 
-            if (points.Count < 4)
+            if (points.Count <= 3)
             {
-                for (int i = 0; i < points.Count; i++)
-                {
-                    outPoints.Add(points[i]);
-                }
+                outPoints = points;
                 return;
             }
 
@@ -31,9 +28,9 @@ namespace CGAlgorithms.Algorithms.ConvexHull
             outPoints.Add(orderedPoints[0]);
             orderedPoints.RemoveAt(0);
 
-            List<KeyValuePair<Point,double>> Angles = new List<KeyValuePair<Point,double>>();
-            
-            for (int i=0; i < orderedPoints.Count; i++)
+            List<KeyValuePair<Point, double>> Angles = new List<KeyValuePair<Point, double>>();
+
+            for (int i = 0; i < orderedPoints.Count; i++)
             {
                 Angles.Add(new KeyValuePair<Point, double>(orderedPoints[i], angle(outPoints[0], orderedPoints[i])));
             }
@@ -46,6 +43,7 @@ namespace CGAlgorithms.Algorithms.ConvexHull
             for (int i = 0; i < orderedAngles.Count; i++)
             {
                 Line l = new Line(outPoints[outPoints.Count - 2], outPoints[outPoints.Count - 1]);
+<<<<<<< Updated upstream
                 while (HelperMethods.CheckTurn(l, orderedAngles[i].Key) == Enums.TurnType.Right|| HelperMethods.CheckTurn(l, orderedAngles[i].Key) == Enums.TurnType.Colinear)
                 {
                     outPoints.RemoveAt(outPoints.Count - 1);
@@ -54,6 +52,16 @@ namespace CGAlgorithms.Algorithms.ConvexHull
                         break;
                     }
                     else 
+=======
+                while (HelperMethods.CheckTurn(l, orderedAngles[i].Key) == Enums.TurnType.Right || HelperMethods.CheckTurn(l, orderedAngles[i].Key) == Enums.TurnType.Colinear)
+                {
+                    outPoints.RemoveAt(outPoints.Count - 1);
+                    if (outPoints.Count < 2)
+                    {
+                        break;
+                    }
+                    else
+>>>>>>> Stashed changes
                     {
                         l = new Line(outPoints[outPoints.Count - 2], outPoints[outPoints.Count - 1]);
                     }
@@ -62,7 +70,11 @@ namespace CGAlgorithms.Algorithms.ConvexHull
                 outPoints.Add(orderedAngles[i].Key);
 
             }
+<<<<<<< Updated upstream
           Console.WriteLine(outPoints .Count);
+=======
+            Console.WriteLine(outPoints.Count);
+>>>>>>> Stashed changes
         }
 
         public override string ToString()

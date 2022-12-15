@@ -1,0 +1,16 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "5cb99923-bea8-42fb-8b29-b117e2221958": {
+      "ProjectGuid": "5cb99923-bea8-42fb-8b29-b117e2221958",
+      "DisplayName": "CGAlgorithms",
+      "ColorIndex": 0
+    },
+    "2cf0939d-73cf-4863-b088-db3ff4003450": {
+      "ProjectGuid": "2cf0939d-73cf-4863-b088-db3ff4003450",
+      "DisplayName": "CGUtilities",
+      "ColorIndex": 1
+    }
+  },
+  "NextColorIndex": 2
+}

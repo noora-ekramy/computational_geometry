@@ -11,21 +11,14 @@ namespace CGAlgorithms.Algorithms.ConvexHull
     {
         public override void Run(List<Point> points, List<Line> lines, List<Polygon> polygons, ref List<Point> outPoints, ref List<Line> outLines, ref List<Polygon> outPolygons)
         {
-
-            int connectPoint = -1 , endpoint=-1;
-
-            if (points.Count < 4)
+            if (points.Count <= 3)
             {
-                for (int i = 0; i < points.Count; i++)
-                {
-                    outPoints.Add(points[i]);
-                }
+                outPoints = points;
                 return;
             }
 
             for (int i = 0; i < points.Count; i++)
             {
-                int F = 0;
                 for (int j = 0; j < points.Count; j++)
                 {
                     if (points[i].Equals(points[j])) continue;
@@ -33,6 +26,7 @@ namespace CGAlgorithms.Algorithms.ConvexHull
                     Line l = new Line(points[i], points[j]);
                     var flagF = 0;
                     var flagT = 0;
+                    
                     for (int k = 0; k < points.Count; k++)
                     {
                         if (points[k].Equals(points[i]) || points[k].Equals(points[j])) continue;
@@ -51,51 +45,41 @@ namespace CGAlgorithms.Algorithms.ConvexHull
 
                     if (flagF != flagT)
                     {
-                        endpoint = j;
-                        connectPoint = i;
-                        outPoints.Add(points[j]);
-                        outPoints.Add(points[i]);
-                        F = 1;
-                        break;
+                        if (!outPoints.Contains(points[j]))
+                        {
+                            outPoints.Add(points[j]);
+                        }
+
+                        if (!outPoints.Contains(points[i]))
+                        {
+                            outPoints.Add(points[i]);
+                        }
                     }
                 }
-                if (F==1) break;
             }
 
-            for (int i = 0; i < points.Count; i++)
+            for (int i = 0; i < outPoints.Count; i++)
             {
-                if (points[i].Equals(points[connectPoint])) continue;
-
-                Line l = new Line(points[connectPoint], points[i]);
-
-                var flagF = 0;
-                var flagT = 0;
+                bool flag = false;
                 
-                for (int k = 0; k < points.Count; k++)
+                for (int j = 0; j < outPoints.Count; j++)
                 {
-                    if (points[k].Equals(points[i]) || points[k].Equals(points[connectPoint])) continue;
-                   
-                    if (HelperMethods.CheckTurn(l, points[k]) == Enums.TurnType.Right)
+                    for (int k = 0; k < outPoints.Count; k++)
                     {
-                        flagT = 1;
+                        if (outPoints[j] == outPoints[k]) continue;
+                        
+                        if (outPoints[i] != outPoints[j] && outPoints[i] != outPoints[k])
+                        {
+                            if (HelperMethods.PointOnSegment(outPoints[i], outPoints[j], outPoints[k]))
+                            {
+                                flag = true;
+                                outPoints.RemoveAt(i);
+                                i--;
+                                break;
+                            }
+                        }
                     }
-                    if (HelperMethods.CheckTurn(l, points[k]) == Enums.TurnType.Left)
-                    {
-                        flagF = 1;
-                    }
-
-                    if (flagT == flagF) break;
-
-                }
-
-                if (flagF != flagT)
-                {
-                    if (!outPoints.Contains(points[i]))
-                    {
-                        connectPoint = i;
-                        outPoints.Add(points[i]);
-                        i = 0;
-                    }
+                    if (flag) break;
                 }
             }
 
@@ -107,5 +91,3 @@ namespace CGAlgorithms.Algorithms.ConvexHull
         }
     }
 }
-
-
