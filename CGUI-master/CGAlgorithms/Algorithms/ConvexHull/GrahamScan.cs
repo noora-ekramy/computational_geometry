@@ -18,9 +18,12 @@ namespace CGAlgorithms.Algorithms.ConvexHull
         public override void Run(List<Point> points, List<Line> lines, List<Polygon> polygons, ref List<Point> outPoints, ref List<Line> outLines, ref List<Polygon> outPolygons)
         {
 
-            if (points.Count <= 3)
+            if (points.Count < 4)
             {
-                outPoints = points;
+                for (int i = 0; i < points.Count; i++)
+                {
+                    outPoints.Add(points[i]);
+                }
                 return;
             }
 
@@ -43,16 +46,6 @@ namespace CGAlgorithms.Algorithms.ConvexHull
             for (int i = 0; i < orderedAngles.Count; i++)
             {
                 Line l = new Line(outPoints[outPoints.Count - 2], outPoints[outPoints.Count - 1]);
-<<<<<<< Updated upstream
-                while (HelperMethods.CheckTurn(l, orderedAngles[i].Key) == Enums.TurnType.Right|| HelperMethods.CheckTurn(l, orderedAngles[i].Key) == Enums.TurnType.Colinear)
-                {
-                    outPoints.RemoveAt(outPoints.Count - 1);
-                    if (outPoints.Count <2)
-                    {
-                        break;
-                    }
-                    else 
-=======
                 while (HelperMethods.CheckTurn(l, orderedAngles[i].Key) == Enums.TurnType.Right || HelperMethods.CheckTurn(l, orderedAngles[i].Key) == Enums.TurnType.Colinear)
                 {
                     outPoints.RemoveAt(outPoints.Count - 1);
@@ -61,7 +54,6 @@ namespace CGAlgorithms.Algorithms.ConvexHull
                         break;
                     }
                     else
->>>>>>> Stashed changes
                     {
                         l = new Line(outPoints[outPoints.Count - 2], outPoints[outPoints.Count - 1]);
                     }
@@ -70,11 +62,7 @@ namespace CGAlgorithms.Algorithms.ConvexHull
                 outPoints.Add(orderedAngles[i].Key);
 
             }
-<<<<<<< Updated upstream
-          Console.WriteLine(outPoints .Count);
-=======
             Console.WriteLine(outPoints.Count);
->>>>>>> Stashed changes
         }
 
         public override string ToString()

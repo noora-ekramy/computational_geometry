@@ -10,7 +10,12 @@
       "ProjectGuid": "2cf0939d-73cf-4863-b088-db3ff4003450",
       "DisplayName": "CGUtilities",
       "ColorIndex": 1
+    },
+    "9fe6be80-4d3a-4ed0-86d2-250d4b3e0ce3": {
+      "ProjectGuid": "9fe6be80-4d3a-4ed0-86d2-250d4b3e0ce3",
+      "DisplayName": "CGAlgorithmsUnitTest",
+      "ColorIndex": 2
     }
   },
-  "NextColorIndex": 2
+  "NextColorIndex": 3
 }
