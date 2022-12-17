@@ -7,12 +7,22 @@ using System.Collections.Generic;
 
 namespace CGAlgorithmsUnitTest
 {
+   
     /// <summary>
     /// Unit Test for Convex Hull
     /// </summary>
     [TestClass]
     public class ConvexHullTest
     {
+        private void printPoints(List<Point> points)
+        {
+            Console.WriteLine("Points length: " + points.Count);
+            foreach (var p in points)
+            {
+                Console.WriteLine(p.X + "," + p.Y);
+            }
+            Console.WriteLine("*************");
+        }
         protected Algorithm convexHullTester;
         protected List<Point> inputPoints;
         protected List<Point> outputPoints;
@@ -3509,7 +3519,8 @@ namespace CGAlgorithmsUnitTest
             desiredPoints.Add(new Point(218, 210));
 
             convexHullTester.Run(inputPoints, inputLines, inputPolygons, ref outputPoints, ref outputLines, ref outputPolygons);
-
+            Console.WriteLine("Output Points:" + outputPoints.Count);
+            Console.WriteLine("desiredPoints Lines:" + desiredPoints.Count);
             bool success = CompareDesiredWithActual(desiredPoints, outputPoints);
             Assert.IsTrue(success, "Fails in " + convexHullTester.ToString() + ": Case 10 (1000 Point)");
             #endregion
@@ -5528,11 +5539,13 @@ namespace CGAlgorithmsUnitTest
             desiredPoints.Add(new Point(205, 207));
 
             convexHullTester.Run(inputPoints, inputLines, inputPolygons, ref outputPoints, ref outputLines, ref outputPolygons);
-
+            Console.WriteLine("Output Points:" + outputPoints.Count);
+            Console.WriteLine("desiredPoints Lines:" + desiredPoints.Count);
             bool success = CompareDesiredWithActual(desiredPoints, outputPoints);
             Assert.IsTrue(success, "Fails in " + convexHullTester.ToString() + ": Case 11 (2000 Point)");
             #endregion
-        }
+       
+       }
 
         public void Case3000Points()
         {
@@ -27630,7 +27643,8 @@ namespace CGAlgorithmsUnitTest
             desiredPoints.Add(new Point(100, -100));
             desiredPoints.Add(new Point(-100, -100));
             convexHullTester.Run(inputPoints, inputLines, inputPolygons, ref outputPoints, ref outputLines, ref outputPolygons);
-
+            printPoints(outputPoints);
+            printPoints(desiredPoints);
             bool success = CompareDesiredWithActual(desiredPoints, outputPoints);
             Assert.IsTrue(success, "Fails in " + convexHullTester.ToString() + ": Case 18 (Triangle)");
             #endregion
@@ -27665,7 +27679,8 @@ namespace CGAlgorithmsUnitTest
             desiredPoints.Add(new Point(30, 0));
             desiredPoints.Add(new Point(-50, 50));
             convexHullTester.Run(inputPoints, inputLines, inputPolygons, ref outputPoints, ref outputLines, ref outputPolygons);
-
+            printPoints(outputPoints);
+            printPoints(desiredPoints);
             bool success = CompareDesiredWithActual(desiredPoints, outputPoints);
             Assert.IsTrue(success, "Fails in " + convexHullTester.ToString() + ": Case 20 (Convex Polygon)");
             #endregion
@@ -27770,7 +27785,8 @@ namespace CGAlgorithmsUnitTest
             desiredPoints.Add(new Point(1, 3));
 
             convexHullTester.Run(inputPoints, inputLines, inputPolygons, ref outputPoints, ref outputLines, ref outputPolygons);
-
+            printPoints(outputPoints);
+            printPoints(desiredPoints);
             bool success = CompareDesiredWithActual(desiredPoints, outputPoints);
             Assert.IsTrue(success, "Fails in Extreme Points: Case 8 (convex hull with one interior point)");
 
@@ -27804,6 +27820,9 @@ namespace CGAlgorithmsUnitTest
                                         
                                             
             convexHullTester.Run(inputPoints, inputLines, inputPolygons, ref outputPoints, ref outputLines, ref outputPolygons);
+            //print outputPoints
+            printPoints(outputPoints);
+            printPoints(desiredPoints);
 
             bool success = CompareDesiredWithActual(desiredPoints, outputPoints);
             Assert.IsTrue(success, "Fails in Extreme Points: Case 9 (random convex hull, Source: http://stackoverflow.com/questions/482278/test-case-data-for-convex-hull)");
@@ -27845,7 +27864,8 @@ namespace CGAlgorithmsUnitTest
             desiredPoints.Add(new Point(2 ,2));
             
             convexHullTester.Run(inputPoints, inputLines, inputPolygons, ref outputPoints, ref outputLines, ref outputPolygons);
-
+            printPoints(outputPoints);
+            printPoints(desiredPoints);
             bool success = CompareDesiredWithActual(desiredPoints, outputPoints);
             Assert.IsTrue(success, "Fails in Extreme Points: Case 10 (random points, Source: http://stackoverflow.com/questions/482278/test-case-data-for-convex-hull)");
 
